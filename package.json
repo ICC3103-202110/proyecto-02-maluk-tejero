@@ -1,0 +1,25 @@
+{
+  "name": "inquirer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ICC3103-202110/proyecto-02-maluk-tejero.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ICC3103-202110/proyecto-02-maluk-tejero/issues"
+  },
+  "homepage": "https://github.com/ICC3103-202110/proyecto-02-maluk-tejero#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "chalk": "^4.1.1",
+    "console-table-printer": "^2.9.0",
+    "figlet": "^1.5.0"
+  }
+}
