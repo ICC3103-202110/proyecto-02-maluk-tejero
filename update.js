@@ -1,5 +1,3 @@
-
-
 function between(min, max) {  
     return Math.floor(
       Math.random() * (max - min+1) + min
@@ -22,7 +20,6 @@ function update(input, model){
         temp[city] = actual
         max[city] = high
         min[city] = low
-        console.log(cities)
         return {
             ...model,
             cities: cities,
