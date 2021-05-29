@@ -14,7 +14,7 @@ async function app(state, update, view){
             printTable(table)
         }
         const input = await inputForm(model)
-        const updatedModel = update(input, model)
+        const updatedModel = await update(input, model)
         state = {
             ...state,
             model: updatedModel,

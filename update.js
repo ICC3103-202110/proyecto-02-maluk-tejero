@@ -1,20 +1,34 @@
-function between(min, max) {  
-    return Math.floor(
-      Math.random() * (max - min+1) + min
-    )
+const axios = require("axios")
+
+
+function api (city) {
+    const API_URL = 'https://api.openweathermap.org/data/2.5/weather'
+    const API_KEY = 'f85f5c8de2893ee54981ed7d7d327120'
+    const FULL_API_URL  = `${API_URL}?q=${city}&appid=${API_KEY}`
+    return new Promise(function (resolve, reject) {
+        axios.get(FULL_API_URL).then((response) => {
+                var result = response.data.main
+                const data = resolve([result.temp_min, result.temp_max, result.temp])
+            },
+                (error) => {
+                    reject(error)
+                }
+        )
+    }) 
 }
+  
 
-
-function update(input, model){
+async function update(input, model){
     const {action} = input
     const {city} = input
     var {cities}  = model
     var {temp} = model
     var {max} = model
     var {min} = model
-    const low = between(-500, 1000)/100
-    const high = between(2500, 3500)/100
-    const actual = between(low, high)/100
+    var res = await api(city)
+    const low = (res[0] - 273.15).toFixed(2)
+    const high = (res[1] - 273.15).toFixed(2)
+    const actual = (res[2] -273.15).toFixed(2)
     if (action === "Add City") {
         cities.push(city)
         temp[city] = actual
