@@ -5,16 +5,22 @@ function api (city) {
     const API_URL = 'https://api.openweathermap.org/data/2.5/weather'
     const API_KEY = 'f85f5c8de2893ee54981ed7d7d327120'
     const FULL_API_URL  = `${API_URL}?q=${city}&appid=${API_KEY}&units=metric`
-    return new Promise(function (resolve, reject) {
-        axios.get(FULL_API_URL).then((response) => {
-                var result = response.data.main
-                const data = resolve([result.temp_min, result.temp_max, result.temp])
-            },
-                (error) => {
-                    reject(error)
-                }
-        )
-    }) 
+    try{
+        const request = axios.get(FULL_API_URL)
+        .then((response) => {
+                    var result = response.data.main
+                    const data = [result.temp_min, result.temp_max, result.temp]
+                    return data
+                })
+        .catch(function (error){
+            if (error.response) {
+                return error.response.data.cod
+            }
+        })
+        return request
+        } catch (error) {
+            //pass
+        }
 }
   
 
@@ -26,6 +32,9 @@ async function update(input, model){
     var {max} = model
     var {min} = model
     var res = await api(city)
+    if (String(res) == String(404)) {
+        return "ERROR"
+    }
     const low = res[0]
     const high = res[1]
     const actual = res[2]

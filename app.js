@@ -14,7 +14,11 @@ async function app(state, update, view){
             printTable(table)
         }
         const input = await inputForm(model)
-        const updatedModel = await update(input, model)
+        const refresh = await update(input, model)
+        if (refresh === "ERROR") {
+            continue
+        }
+        const updatedModel = await refresh
         state = {
             ...state,
             model: updatedModel,
