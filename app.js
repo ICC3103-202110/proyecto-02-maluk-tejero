@@ -18,7 +18,7 @@ async function app(state, update, view){
         if (refresh === "ERROR") {
             continue
         }
-        const updatedModel = await refresh
+        const updatedModel = refresh
         state = {
             ...state,
             model: updatedModel,
