@@ -29,34 +29,47 @@ function getTable(model){
 }
 
 
-function inputForm(model){
-    const {cities} = model
+function askAction() {
     return inquirer.prompt([
         {
             name: "action",
             type: "list",
             message: "Select action:",
             choices: ["Add City", "Update City", "Delete City"]
-        },
+        }
+    ])
+}
+
+function askLocation() {
+    return inquirer.prompt([
         {
             name: "city",
             type: "input",
             message: "Location",
-            when: (answers) => answers.action === "Add City"
-        },
+        }
+    ])
+}
+
+function askUpdate(model) {
+    const {cities} = model
+    return inquirer.prompt([
         {
             name: "city",
             type: "list",
             message: "Update City:",
-            choices: cities,
-            when: (answers) => answers.action === "Update City"
-        },
+            choices: cities
+        }
+    ])
+}
+
+function askDelete(model) {
+    const {cities} = model
+    return inquirer.prompt([
         {
             name: "city",
             type: "list",
             message: "Delete city:",
-            choices: cities,
-            when: (answers) => answers.action === "Delete City"
+            choices: cities
         }
     ])
 }
@@ -70,6 +83,9 @@ function view(model){
 
 module.exports = {
     getTitle,
-    inputForm,
-    view
+    view,
+    askAction,
+    askLocation,
+    askUpdate,
+    askDelete
 }

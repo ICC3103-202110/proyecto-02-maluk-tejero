@@ -1,9 +1,12 @@
 const {printTable} = require("console-table-printer")
 const {getTitle} = require("./view")
-const {inputForm} = require("./view")
+const {askAction} = require("./view")
+const {askLocation} = require("./view")
+const {askUpdate} = require("./view")
+const {askDelete} = require("./view")
 
 async function app(state, update, view){
-    while (true){
+    while (true) {
         const {model, currentView} = state
         const {title, table} = currentView
         console.clear()
@@ -13,9 +16,25 @@ async function app(state, update, view){
         } else {
             printTable(table)
         }
-        const input = await inputForm(model)
-        const refresh = await update(input, model)
+        if (error) {
+            console.log("City not found")
+        }
+        var error = false
+        const inputAct = await askAction()
+        var inputLoc = ""
+        if (inputAct.action === "Add City") {
+            inputLoc = await askLocation()
+        } else if (inputAct.action === "Update City" && model["cities"].length != 0) {
+            inputLoc = await askUpdate(model)
+        } else if (inputAct.action === "Delete City" && model["cities"].length != 0) {
+            inputLoc = await askDelete(model)
+        } else {
+            error = true
+            continue
+        }
+        const refresh = await update(inputAct, inputLoc, model)
         if (refresh === "ERROR") {
+            error = true
             continue
         }
         const updatedModel = refresh

@@ -24,9 +24,9 @@ function api (city) {
 }
 
 
-async function update(input, model){
-    const {action} = input
-    const {city} = input
+async function update(inputAct, inputLoc, model){
+    const {action} = inputAct
+    const {city} = inputLoc
     var {cities} = model
     var {temp} = model
     var {max} = model
